@@ -12,16 +12,15 @@ export mpack_url="http://public-repo-1.hortonworks.com/HDF/centos7/3.x/updates/3
 export cem_url="https://archive.cloudera.com/CEM/centos7/1.x/updates/1.0.0.0/CEM-1.0.0.0-centos7-tars-tarball.tar.gz"
 export hdf_vdf="http://public-repo-1.hortonworks.com/HDF/centos7/3.x/updates/3.4.1.1/HDF-3.4.1.1-4.xml"
 
-#working
-#export bp_template=${bp_template:-"https://gist.github.com/abajwa-hw/691d1e97b5b61c5be7ec4acb383d0de4/raw"}
+
 
 #testing
-export bp_template=${bp_template:-"https://gist.github.com/abajwa-hw/10952dda5ff24a71fcaed1a69e30472c/raw"}
+export bp_template=${bp_template:-"https://raw.githubusercontent.com/cfiston/cloud/master/template.json"}
 
 
 export ambari_password=${ambari_password:-StrongPassword}
 export db_password=${db_password:-StrongPassword}
-export nifi_flow="https://gist.githubusercontent.com/abajwa-hw/3857a205d739473bb541490f6471cdba/raw"
+export nifi_flow="https://raw.githubusercontent.com/cfiston/cloud/master/nifi_flow.xml"
 export install_solr=${install_solr:-false}    ## for Twitter demo
 export host=$(hostname -f)
 
@@ -35,7 +34,7 @@ export service_password="BadPass#1"
 
 if [ "${create_image}" = true  ]; then
   echo "updating /etc/hosts with demo.hortonworks.com entry pointing to VMs ip, hostname..."
-  curl -sSL https://gist.github.com/abajwa-hw/9d7d06b8d0abf705ae311393d2ecdeec/raw | sudo -E sh
+  curl -sSL https://raw.githubusercontent.com/cfiston/cloud/master/create_image.sh| sudo -E sh
   sleep 5
 fi
 
@@ -80,7 +79,7 @@ echo Installing Ambari
 
 export install_ambari_server=true
 #export java_provider=oracle
-curl -sSL https://raw.githubusercontent.com/cfiston/cloud/master/ambari-bootstrap.sh  | sudo -E sh
+curl -sSL https://raw.githubusercontent.com/cfiston/cloud/master/ambari-bootstrap.sh | sudo -E sh
 sudo ambari-server setup --jdbc-db=mysql --jdbc-driver=/usr/share/java/mysql-connector-java.jar
 sudo ambari-server install-mpack --verbose --mpack=${mpack_url}
 # Hack to fix a current bug in Ambari Blueprints
@@ -171,7 +170,7 @@ fi
 
 if [ "${create_image}" = true  ]; then
   echo "Setting up auto start of services on boot"
-  curl -sSL https://gist.github.com/abajwa-hw/408134e032c05d5ff7e592cd0770d702/raw | sudo -E sh
+  curl -sSL https://raw.githubusercontent.com/cfiston/cloud/master/create_image_v2.sh| sudo -E sh
 fi
 
 
@@ -225,12 +224,12 @@ sudo chown -R root:root /usr/hdf/cem/minifi-toolkit-*
 
 cd /usr/hdf/cem/efm/conf
 sudo rm -f efm.properties
-sudo wget https://raw.githubusercontent.com/fabiog1901/OneNodeCDHCluster/master/efm.properties
+sudo wget https://raw.githubusercontent.com/cfiston/cloud/master/efm.properties
 
 
 cd /usr/hdf/cem/minifi/conf
 sudo rm -f bootstrap.conf
-sudo wget https://raw.githubusercontent.com/fabiog1901/OneNodeCDHCluster/master/bootstrap.conf
+sudo wget https://raw.githubusercontent.com/cfiston/cloud/master/bootstrap.conf
 
 sudo sed -i "s/YourHostname/`hostname -f`/g" /usr/hdf/cem/efm/conf/efm.properties
 sudo sed -i "/efm.db.password=/ s/=.*/=${db_password}/" /usr/hdf/cem/efm/conf/efm.properties
