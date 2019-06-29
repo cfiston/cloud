@@ -1,8 +1,6 @@
 
 #!/usr/bin/env bash
-# Launch Centos/RHEL 7 VM with at least 8 vcpu / 32Gb+ memory / 100Gb disk
-# Then run:
-# curl -sSL https://gist.github.com/abajwa-hw/9bf11bcaadaa7f94f9075432ce5b3d0b/raw | sudo -E sh
+
 
 export create_image=${create_image:-true}
 export ambari_version=2.7.3.0
