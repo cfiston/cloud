@@ -44,6 +44,8 @@ batchcounter=0
 for cluster in ${clusters}
 do
   ((batchcounter++))
+  aws cloudformation delete-stack --stack-name ${cluster}
+  sleep 20
   aws cloudformation create-stack --stack-name ${cluster} \
     --capabilities CAPABILITY_IAM \
     --template-body "file://./${cfn_file}" \
