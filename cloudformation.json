@@ -180,7 +180,7 @@
             "Type": "AWS::EC2::KeyPair::KeyName"
         },
         "PostCommand": {
-            "Default": "curl https://raw.githubusercontent.com/cfiston/setup/master/ambari-bootstrap/setup.sh| bash",
+            "Default": "curl https://github.com/cfiston/cloud/blob/master/master/deploy_hdp31hdf34.sh | bash",
             "Description": "Command to run during after nodes are deployed",
             "Type": "String"
         },
