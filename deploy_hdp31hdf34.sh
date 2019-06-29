@@ -202,7 +202,11 @@ ambari_pass="${ambari_password}" source /tmp/ambari-bootstrap-master/extras/amba
 ambari_configs
 ambari_wait_request_complete 1
 
+
+
 sleep 10
+
+wget https://raw.githubusercontent.com/cfiston/cloud/master/final.svg /tmp/
 
 echo "installing CEM..."
 sudo mkdir -p /usr/hdf/cem
