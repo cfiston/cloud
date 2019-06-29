@@ -122,7 +122,7 @@
         },
         "AmbariVersion": {
             "AllowedPattern": "\\d\\.\\d\\.\\d\\.\\d|\\d\\.\\d\\.\\d",
-            "Default": "2.4.1.0",
+            "Default": "2.7.3.0",
             "Description": "Ambari Version",
             "Type": "String"
         },
@@ -180,7 +180,7 @@
             "Type": "AWS::EC2::KeyPair::KeyName"
         },
         "PostCommand": {
-            "Default": "curl https://github.com/cfiston/cloud/blob/master/master/deploy_hdp31hdf34.sh | bash",
+            "Default": "curl https://raw.githubusercontent.com/cfiston/cloud/master/deploy_hdp31hdf34.sh | bash",
             "Description": "Command to run during after nodes are deployed",
             "Type": "String"
         },
@@ -870,7 +870,7 @@
                 "Handle": {
                     "Ref": "waitHandleAmbari"
                 },
-                "Timeout": "3600"
+                "Timeout": "36000"
             },
             "Type": "AWS::CloudFormation::WaitCondition"
         },

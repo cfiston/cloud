@@ -39,6 +39,8 @@ while true; do
 done
 
 batchcounter=0
+#aws cloudformation  delete-stack --stack-name ${cluster}
+#sleep 20
 for cluster in ${clusters}
 do
   ((batchcounter++))
