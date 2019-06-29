@@ -136,7 +136,7 @@ sudo ambari-server restart
 
 # Ambari blueprint cluster install
 echo "Deploying HDP and HDF services..."
-curl -ssLO https://github.com/seanorama/ambari-bootstrap/archive/master.zip1
+curl -ssLO https://github.com/seanorama/ambari-bootstrap/archive/master.zip
 unzip -q master.zip -d  /tmp
 
 export host=$(hostname -f)
