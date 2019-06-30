@@ -22,7 +22,7 @@ export nifi_flow="https://raw.githubusercontent.com/cfiston/cloud/master/nifi_fl
 export install_solr=${install_solr:-false}    ## for Twitter demo
 export host=$(hostname -f)
 
-export ambari_services="YARN ZOOKEEPER SUPERSET STREAMLINE NIFI NIFI_REGISTRY KAFKA STORM REGISTRY HBASE PHOENIX" ## HIVE SPARK2
+export ambari_services="HDFS MAPREDUCE2 YARN ZOOKEEPER DRUID SUPERSET STREAMLINE NIFI NIFI_REGISTRY KAFKA STORM REGISTRY HBASE PHOENIX" ## HIVE SPARK2
 export cluster_name=Keiba
 export ambari_stack_version=3.1
 export host_count=1
