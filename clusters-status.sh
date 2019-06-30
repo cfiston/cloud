@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
-export lab_prefix=${lab_prefix:-mc-test}
+export lab_prefix=${lab_prefix:keitaf}
 lab_first=${lab_first:-1}
 lab_count=${lab_count:-1}
 
 clusters=$(seq -w ${lab_first} $((lab_first+lab_count-1)))
 clusters=$(for cluster in ${clusters}; do echo ${lab_prefix}${cluster}; done)
-
+clusters="keitaf100"
 echo "########################################"
 echo "## Status of the cluster's CloudFormation Stacks:"
 for cluster in ${clusters}
@@ -17,4 +17,3 @@ do
       --output text
 done
 echo "########################################"
-

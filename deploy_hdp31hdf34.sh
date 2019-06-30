@@ -31,7 +31,7 @@ export service_user="keibacloudadmin"
 export service_password="BadPass#1"
 
 if [ "${create_image}" = true  ]; then
-  echo "updating /etc/hosts with demo.hortonworks.com entry pointing to VMs ip, hostname..."
+  echo "updating /etc/hosts with demo.keibacloud.com entry pointing to VMs ip, hostname..."
   curl -sSL https://raw.githubusercontent.com/cfiston/cloud/master/create_image.sh | sudo -E sh
   sleep 5
 fi
@@ -77,7 +77,7 @@ echo Installing Ambari
 
 export install_ambari_server=true
 #export java_provider=oracle
-curl -sSL curl -sSL https://raw.githubusercontent.com/abajwa-hw/ambari-bootstrap/master/ambari-bootstrap.sh | sudo -E sh 
+curl -sSL curl -sSL https://raw.githubusercontent.com/abajwa-hw/ambari-bootstrap/master/ambari-bootstrap.sh | sudo -E sh
 sudo ambari-server setup --jdbc-db=mysql --jdbc-driver=/usr/share/java/mysql-connector-java.jar
 sudo ambari-server install-mpack --verbose --mpack=${mpack_url}
 # Hack to fix a current bug in Ambari Blueprints
@@ -205,8 +205,12 @@ ambari_wait_request_complete 1
 
 
 sleep 10
-
-wget https://raw.githubusercontent.com/cfiston/cloud/master/final.svg /tmp/
+sudo mkdir /home/centos/temp/
+ cd /home/centos/temp/
+sudo wget https://raw.githubusercontent.com/cfiston/cloud/master/final.svg
+sudo wget https://raw.githubusercontent.com/cfiston/cloud/master/keibacloud.png
+sudo cp /home/centos/temp/keibacloud.png  /usr/lib/ambari-server/web/img/ambari-logo.png
+sudo cp /home/centos/temp/final.svg   /var/lib/nifi/work/jetty/nifi-web-ui-1.9.0.3.4.0.0-155.war/webapp/images/hdf-header.svg
 
 echo "installing CEM..."
 sudo mkdir -p /usr/hdf/cem

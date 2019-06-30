@@ -1,7 +1,7 @@
 #curl -sSL https://gist.github.com/abajwa-hw/9d7d06b8d0abf705ae311393d2ecdeec/raw | sudo -E sh
 
-export vm_name=${vm_name:-demo} 
-export domain_name=${domain_name:-hortonworks.com}
+export vm_name=${vm_name:-demo}
+export domain_name=${domain_name:-keibacloud.com}
 export cm_mode=${cm_mode:-false}
 
 echo "# Do not remove the following line, or various programs" > /etc/hosts
@@ -20,7 +20,7 @@ function get_ip() {
 
 function get_ip_power() {
  ip addr | grep 'eth0' | tail -n1 | awk '{print $2}' | cut -f1  -d'/'
-} 
+}
 
 HOST=$(get_ip)
 NUM=5
@@ -47,7 +47,7 @@ fi
 hostnamectl
 if [ $? = 0 ]; then
     hostnamectl set-hostname ${vm_name}.${domain_name}
-    hostnamectl --transient set-hostname ${vm_name}    
+    hostnamectl --transient set-hostname ${vm_name}
 fi
 hostname ${vm_name}.${domain_name}
 echo 0 > /proc/sys/kernel/hung_task_timeout_secs

@@ -6,8 +6,6 @@
 
 export create_image=${create_image:-true}
 export ambari_version=2.7.3.0
-#export mpack_url="http://public-repo-1.hortonworks.com/HDF/centos7/3.x/updates/3.4.0.0/tars/hdf_ambari_mp/hdf-ambari-mpack-3.4.0.0-155.tar.gz"
-#export mpack_url="http://public-repo-1.hortonworks.com/HDF/centos7/3.x/updates/3.4.1.0/tars/hdf_ambari_mp/hdf-ambari-mpack-3.4.1.0-5.tar.gz"
 export mpack_url="http://public-repo-1.hortonworks.com/HDF/centos7/3.x/updates/3.4.1.1/tars/hdf_ambari_mp/hdf-ambari-mpack-3.4.1.1-4.tar.gz"
 export cem_url="https://archive.cloudera.com/CEM/centos7/1.x/updates/1.0.0.0/CEM-1.0.0.0-centos7-tars-tarball.tar.gz"
 export hdf_vdf="http://public-repo-1.hortonworks.com/HDF/centos7/3.x/updates/3.4.1.1/HDF-3.4.1.1-4.xml"
