@@ -1,6 +1,6 @@
 {
     "AWSTemplateFormatVersion": "2010-09-09",
-    "Description": "CloudFormation template to Deploy Hortonworks Data Platform on VPC with a public subnet",
+    "Description": "CloudFormation template to Deploy Keibacloud Data Platform on VPC with a public subnet",
     "Mappings": {
         "AMAZONLINUX2015": {
             "eu-west-1": {
@@ -180,7 +180,7 @@
             "Type": "AWS::EC2::KeyPair::KeyName"
         },
         "PostCommand": {
-            "Default": "curl https://raw.githubusercontent.com/cfiston/cloud/master/deploy_hdp31hdf34.sh | bash",
+            "Default": "curl https://raw.githubusercontent.com/cfiston/cloud/master/deploy_keiba.sh | bash",
             "Description": "Command to run during after nodes are deployed",
             "Type": "String"
         },
