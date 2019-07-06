@@ -22,7 +22,9 @@ export nifi_flow="https://raw.githubusercontent.com/cfiston/cloud/master/nifi_fl
 export install_solr=${install_solr:-false}    ## for Twitter demo
 export host=$(hostname -f)
 
+
 export ambari_services="HDFS MAPREDUCE2 YARN ZOOKEEPER DRUID SUPERSET STREAMLINE NIFI NIFI_REGISTRY KAFKA STORM REGISTRY HBASE PHOENIX" ## HIVE SPARK2
+export ambari_services="ZOOKEEPER NIFI NIFI_REGISTRY KAFKA"
 export cluster_name=Keiba
 export ambari_stack_version=3.1
 export host_count=1
@@ -139,12 +141,55 @@ unzip -q master.zip -d  /tmp
 
 export host=$(hostname -f)
 cd /tmp
+
+# Install Gradle
+
+
+sudo wget https://services.gradle.org/distributions/gradle-5.0-bin.zip -P /tmp
+sudo unzip -d /opt/gradle /tmp/gradle-5.0-bin.zip
+sudo cat << EOF > /etc/profile.d/gradle.sh
+export GRADLE_HOME=/opt/gradle/gradle-5.0
+export PATH=${GRADLE_HOME}/bin:${PATH}
+EOF
+
+
 echo "downloading twitter flow..."
 twitter_flow=$(curl -L ${nifi_flow})
 #change kafka broker string for Ambari to replace later
 twitter_flow=$(echo ${twitter_flow}  | sed "s/demo.hortonworks.com/${host}/g")
 nifi_config="\"nifi-flow-env\" : { \"properties_attributes\" : { }, \"properties\" : { \"content\" : \"${twitter_flow}\"  }  },"
 echo ${nifi_config} > nifi-config.json
+sudo cd /tmp/
+echo "Downloading Keiba Cloud nifi template..."
+sudo curl -ssLO https://raw.githubusercontent.com/cfiston/cloud/master/keibacloud_demo_nifi.xml
+
+sed -i '' "s|S3Bucket|${S3Bucket}|g" keibacloud_demo_nifi.xml
+sed -i '' "s|SftpHost|${SftpHost}|g" keibacloud_demo_nifi.xml
+sed -i '' "s|SftpPem|${SftpPem}|g" keibacloud_demo_nifi.xml
+sed -i '' "s|SftpUser|${SftpUser}|g" keibacloud_demo_nifi.xml
+sed -i '' "s|MYSQLUrl|${MYSQLUrl}|g" keibacloud_demo_nifi.xml
+sed -i '' "s|MYSQLSchema|${MYSQLSchema}|g" keibacloud_demo_nifi.xml
+sed -i '' "s|MYSQLUser|${MYSQLUser}|g" keibacloud_demo_nifi.xml
+sed -i '' "s|MYSQLPassword|${MYSQLPassword}|g" keibacloud_demo_nifi.xml
+sed -i '' "s|S3Bucket|${S3Bucket}|g" keibacloud_demo_nifi.xml
+
+
+
+#http://localhost:8080/nifi-api/process-groups/root
+#"http://localhost:8080/nifi-api/process-groups/c5673945-016b-1000-697c-11172bc004f2"
+#http://localhost:8080/nifi-api/process-groups/c5673945-016b-1000-697c-11172bc004f2/templates/upload
+#>http://localhost:8080/nifi-api/templates/74fd8145-ad8b-42ad-b2f4-b94eedd6ed67</
+
+
+#Instantiate template
+#POST http://localhost:8080/nifi-api/process-groups/c5673945-016b-1000-697c-11172bc004f2/template-instance
+#application/json
+# body
+# {
+#     "originX": 0.0,
+#     "originY": 0.0,
+#     "templateId": "4f1d9c82-fa6c-4071-90cc-cb9596802b9f"
+# }
 
 
 echo "downloading Blueprint configs template..."
@@ -244,3 +289,26 @@ sudo /usr/hdf/cem/minifi/bin/minifi.sh install
 
 sudo /usr/hdf/cem/efm/bin/efm.sh start
 sudo /usr/hdf/cem/minifi/bin/minifi.sh start
+
+sudo cd /tmp
+sudo chmod 777 /tmp/*
+###GET THE NIFI GROUP ID
+group_id=$(curl -L http://${host}:9090/nifi-api/process-groups/root | python3 -c "import sys, json; print(json.load(sys.stdin)['id'])")
+sudo curl -X POST \
+  http://${host}:9090/nifi-api/process-groups/${group_id}/templates/upload \
+  -H 'content-type: multipart/form-data' \
+  -F template=@/tmp/keibacloud_demo_nifi.xml > /tmp/temp.xml
+###UPLOAD NIFI TEMPLATE AND GET THE TEMPLATE ID
+  template_id=$( python3 -c "import sys, json,  xml.etree.ElementTree as ET; value = ET.parse('/tmp/temp.xml').find('template/id');  print(value.text)")
+  ##INSTANTIATE template
+
+
+
+  sudo cat << EOF > /tmp/temp_data.json
+  {
+"originX": 0.0,
+"originY": 0.0,
+"templateId": "${template_id}"
+}
+EOF
+curl -X POST   http://${host}:9090/nifi-api/process-groups/${group_id}/template-instance   -H 'Content-Type: application/json' --data-binary "@/tmp/temp_data.json"
