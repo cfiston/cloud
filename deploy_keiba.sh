@@ -24,7 +24,7 @@ export host=$(hostname -f)
 
 
 export ambari_services="HDFS MAPREDUCE2 YARN ZOOKEEPER DRUID SUPERSET STREAMLINE NIFI NIFI_REGISTRY KAFKA STORM REGISTRY HBASE PHOENIX" ## HIVE SPARK2
-export ambari_services="ZOOKEEPER NIFI NIFI_REGISTRY KAFKA"
+export ambari_services="ZOOKEEPER NIFI NIFI_REGISTRY KAFKA HIVE SPARK2"
 export cluster_name=Keiba
 export ambari_stack_version=3.1
 export host_count=1
