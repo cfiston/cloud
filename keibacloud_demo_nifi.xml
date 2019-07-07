@@ -1525,26 +1525,26 @@
             <properties>
                 <entry>
                     <key>Database Connection URL</key>
-                    <value>jdbc:mysql://MYSQLUrl/MYSQLSchema</value>
+                    <value>jdbc:Mysql://MysqlUrl/MysqlSchema</value>
                 </entry>
                 <entry>
                     <key>Database Driver Class Name</key>
-                    <value>com.mysql.jdbc.Driver</value>
+                    <value>com.Mysql.jdbc.Driver</value>
                 </entry>
                 <entry>
                     <key>database-driver-locations</key>
-                    <value>file:///Users/keitaf/code/cloud/mysql-connector-java-5.1.47-bin.jar</value>
+                    <value>file:///Users/keitaf/code/cloud/Mysql-connector-java-5.1.47-bin.jar</value>
                 </entry>
                 <entry>
                     <key>kerberos-credentials-service</key>
                 </entry>
                 <entry>
                     <key>Database User</key>
-                    <value>MYSQLUrl</value>
+                    <value>MysqlUrl</value>
                 </entry>
                 <entry>
                     <key>Password</key>
-                    <value>MYSQLPassword</value>
+                    <value>MysqlPassword</value>
                 </entry>
                 <entry>
                     <key>Max Wait Time</key>
@@ -2383,7 +2383,7 @@
                     </entry>
                     <entry>
                         <key>Schema Name</key>
-                        <value>MYSQLSchema</value>
+                        <value>MysqlSchema</value>
                     </entry>
                     <entry>
                         <key>Translate Field Names</key>
@@ -2936,7 +2936,7 @@ The relationship  not.found is also routed to another processor so the user is a
                 <yieldDuration>1 sec</yieldDuration>
             </config>
             <executionNodeRestricted>false</executionNodeRestricted>
-            <name>Get Data from MySQL</name>
+            <name>Get Data from Mysql</name>
             <relationships>
                 <autoTerminate>false</autoTerminate>
                 <name>failure</name>
@@ -3910,7 +3910,7 @@ The relationship  not.found is also routed to another processor so the user is a
                     </entry>
                     <entry>
                         <key>put-db-record-schema-name</key>
-                        <value>MYSQLSchema</value>
+                        <value>MysqlSchema</value>
                     </entry>
                     <entry>
                         <key>put-db-record-table-name</key>
@@ -4231,7 +4231,7 @@ The relationship  not.found is also routed to another processor so the user is a
                     </entry>
                     <entry>
                         <key>Schema Name</key>
-                        <value>MYSQLSchema</value>
+                        <value>MysqlSchema</value>
                     </entry>
                     <entry>
                         <key>Translate Field Names</key>
@@ -4545,7 +4545,7 @@ The relationship  not.found is also routed to another processor so the user is a
                     </entry>
                     <entry>
                         <key>put-db-record-schema-name</key>
-                        <value>MYSQLSchema</value>
+                        <value>MysqlSchema</value>
                     </entry>
                     <entry>
                         <key>put-db-record-table-name</key>
