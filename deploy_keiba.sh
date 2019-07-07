@@ -163,14 +163,14 @@ sudo cd /tmp/
 echo "Downloading Keiba Cloud nifi template..."
 sudo curl -ssLO https://raw.githubusercontent.com/cfiston/cloud/master/keibacloud_demo_nifi.xml
 
-sudo sed -i '' "s|S3Bucket|${sthree_bucket}|g" keibacloud_demo_nifi.xml
-sudo sed -i '' "s|SftpHost|${sftp_host}|g" keibacloud_demo_nifi.xml
-sudo sed -i '' "s|SftpPem|${sftp_pem}|g" keibacloud_demo_nifi.xml
-sudo sed -i '' "s|SftpUser|${sftp_user}|g" keibacloud_demo_nifi.xml
-sudo sed -i '' "s|MysqlUrl|${mysql_url}|g" keibacloud_demo_nifi.xml
-sudo sed -i '' "s|MysqlSchema|${mysql_schema}|g" keibacloud_demo_nifi.xml
-sudo sed -i '' "s|MysqlUser|${mysql_user}|g" keibacloud_demo_nifi.xml
-sudo sed -i '' "s|MysqlPassword|${mysql_password}|g" keibacloud_demo_nifi.xml
+sudo sed -i  "s|S3Bucket|${sthree_bucket}|g" keibacloud_demo_nifi.xml
+sudo sed -i  "s|SftpHost|${sftp_host}|g" keibacloud_demo_nifi.xml
+sudo sed -i  "s|SftpPem|${sftp_pem}|g" keibacloud_demo_nifi.xml
+sudo sed -i  "s|SftpUser|${sftp_user}|g" keibacloud_demo_nifi.xml
+sudo sed -i  "s|MysqlUrl|${mysql_url}|g" keibacloud_demo_nifi.xml
+sudo sed -i  "s|MysqlSchema|${mysql_schema}|g" keibacloud_demo_nifi.xml
+sudo sed -i  "s|MysqlUser|${mysql_user}|g" keibacloud_demo_nifi.xml
+sudo sed -i  "s|MysqlPassword|${mysql_password}|g" keibacloud_demo_nifi.xml
 
 
 
