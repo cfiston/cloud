@@ -142,15 +142,15 @@ unzip -q master.zip -d  /tmp
 export host=$(hostname -f)
 cd /tmp
 
-# Install Gradle
-
-
-sudo wget https://services.gradle.org/distributions/gradle-5.0-bin.zip -P /tmp
-sudo unzip -d /opt/gradle /tmp/gradle-5.0-bin.zip
-sudo cat << EOF > /etc/profile.d/gradle.sh
-export GRADLE_HOME=/opt/gradle/gradle-5.0
-export PATH=${GRADLE_HOME}/bin:${PATH}
-EOF
+# # Install Gradle
+#
+#
+# sudo wget https://services.gradle.org/distributions/gradle-5.0-bin.zip -P /tmp
+# sudo unzip -d /opt/gradle /tmp/gradle-5.0-bin.zip
+# sudo cat << EOF > /etc/profile.d/gradle.sh
+# export GRADLE_HOME=/opt/gradle/gradle-5.0
+# export PATH=${GRADLE_HOME}/bin:${PATH}
+# EOF
 
 
 echo "downloading twitter flow..."
@@ -257,6 +257,31 @@ sudo wget https://raw.githubusercontent.com/cfiston/cloud/master/keibacloud.png
 sudo cp /home/centos/temp/keibacloud.png  /usr/lib/ambari-server/web/img/ambari-logo.png
 sudo cp /home/centos/temp/final.svg   /var/lib/nifi/work/jetty/nifi-web-ui-1.9.0.3.4.0.0-155.war/webapp/images/hdf-header.svg
 
+
+sudo cd /tmp
+sudo chmod 777 /tmp/*
+nifi_ip=$(curl http://169.254.169.254/latest/meta-data/local-ipv4)
+###GET THE NIFI GROUP ID
+group_id=$(curl -L http://${nifi_ip}:9090/nifi-api/process-groups/root | python -c "import sys, json; print(json.load(sys.stdin)['id'])")
+sudo curl -X POST \
+  http://${nifi_ip}:9090/nifi-api/process-groups/${group_id}/templates/upload \
+  -H 'content-type: multipart/form-data' \
+  -F template=@/tmp/keibacloud_demo_nifi.xml > /tmp/temp.xml
+###UPLOAD NIFI TEMPLATE AND GET THE TEMPLATE ID
+  template_id=$( python -c "import sys, json,  xml.etree.ElementTree as ET; value = ET.parse('/tmp/temp.xml').find('template/id');  print(value.text)")
+  ##INSTANTIATE template
+
+
+
+  sudo cat << EOF > /tmp/temp_data.json
+  {
+"originX": 0.0,
+"originY": 0.0,
+"templateId": "${template_id}"
+}
+EOF
+curl -X POST   http://${nifi_ip}:9090/nifi-api/process-groups/${group_id}/template-instance   -H 'Content-Type: application/json' --data-binary "@/tmp/temp_data.json"
+
 echo "installing CEM..."
 sudo mkdir -p /usr/hdf/cem
 chmod 777 -R /usr/hdf/cem
@@ -289,26 +314,3 @@ sudo /usr/hdf/cem/minifi/bin/minifi.sh install
 
 sudo /usr/hdf/cem/efm/bin/efm.sh start
 sudo /usr/hdf/cem/minifi/bin/minifi.sh start
-
-sudo cd /tmp
-sudo chmod 777 /tmp/*
-###GET THE NIFI GROUP ID
-group_id=$(curl -L http://${host}:9090/nifi-api/process-groups/root | python3 -c "import sys, json; print(json.load(sys.stdin)['id'])")
-sudo curl -X POST \
-  http://${host}:9090/nifi-api/process-groups/${group_id}/templates/upload \
-  -H 'content-type: multipart/form-data' \
-  -F template=@/tmp/keibacloud_demo_nifi.xml > /tmp/temp.xml
-###UPLOAD NIFI TEMPLATE AND GET THE TEMPLATE ID
-  template_id=$( python3 -c "import sys, json,  xml.etree.ElementTree as ET; value = ET.parse('/tmp/temp.xml').find('template/id');  print(value.text)")
-  ##INSTANTIATE template
-
-
-
-  sudo cat << EOF > /tmp/temp_data.json
-  {
-"originX": 0.0,
-"originY": 0.0,
-"templateId": "${template_id}"
-}
-EOF
-curl -X POST   http://${host}:9090/nifi-api/process-groups/${group_id}/template-instance   -H 'Content-Type: application/json' --data-binary "@/tmp/temp_data.json"
