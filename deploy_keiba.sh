@@ -44,18 +44,18 @@ echo "Hostname is: ${host}"
 
 
 echo Installing Packages...
-sudo yum localinstall -y https://dev.Mysql.com/get/Mysql57-community-release-el7-8.noarch.rpm
-sudo yum install -y git python-argparse epel-release Mysql-connector-java* Mysql-community-server nc
+sudo yum localinstall -y https://dev.mysql.com/get/mysql57-community-release-el7-8.noarch.rpm
+sudo yum install -y git python-argparse epel-release ysql-connector-java* mysql-community-server nc
 # Mysql Setup to keep the new services separate from the originals
 echo Database setup...
-sudo systemctl enable Mysqld.service
-sudo systemctl start Mysqld.service
+sudo systemctl enable mysqld.service
+sudo systemctl start mysqld.service
 #extract system generated Mysql password
-oldpass=$( grep 'temporary.*root@localhost' /var/log/Mysqld.log | tail -n 1 | sed 's/.*root@localhost: //' )
+oldpass=$( grep 'temporary.*root@localhost' /var/log/mysqld.log | tail -n 1 | sed 's/.*root@localhost: //' )
 #create sql file that
 # 1. reset Mysql password to temp value and create druid/superset/registry/streamline schemas and users
 # 2. sets passwords for druid/superset/registry/streamline users to ${db_password}
-cat << EOF > Mysql-setup.sql
+cat << EOF > mysql-setup.sql
 ALTER USER 'root'@'localhost' IDENTIFIED BY 'Secur1ty!';
 uninstall plugin validate_password;
 CREATE DATABASE druid DEFAULT CHARACTER SET utf8; CREATE DATABASE superset DEFAULT CHARACTER SET utf8; CREATE DATABASE registry DEFAULT CHARACTER SET utf8; CREATE DATABASE streamline DEFAULT CHARACTER SET utf8; CREATE DATABASE efm DEFAULT CHARACTER SET utf8;
@@ -69,18 +69,18 @@ FLUSH PRIVILEGES;
 commit;
 EOF
 #execute sql file
-Mysql -h localhost -u root -p"$oldpass" --connect-expired-password < Mysql-setup.sql
+mysql -h localhost -u root -p"$oldpass" --connect-expired-password < mysql-setup.sql
 #change Mysql password to ${db_password}
-Mysqladmin -u root -p'Secur1ty!' password ${db_password}
+mysqladmin -u root -p'Secur1ty!' password ${db_password}
 #test password and confirm dbs created
-Mysql -u root -p${db_password} -e 'show databases;'
+mysql -u root -p${db_password} -e 'show databases;'
 # Install Ambari
 echo Installing Ambari
 
 export install_ambari_server=true
 #export java_provider=oracle
 curl -sSL curl -sSL https://raw.githubusercontent.com/abajwa-hw/ambari-bootstrap/master/ambari-bootstrap.sh | sudo -E sh
-sudo ambari-server setup --jdbc-db=Mysql --jdbc-driver=/usr/share/java/Mysql-connector-java.jar
+sudo ambari-server setup --jdbc-db=mysql --jdbc-driver=/usr/share/java/mysql-connector-java.jar
 sudo ambari-server install-mpack --verbose --mpack=${mpack_url}
 # Hack to fix a current bug in Ambari Blueprints
 sudo sed -i.bak "s/\(^    total_sinks_count = \)0$/\11/" /var/lib/ambari-server/resources/stacks/HDP/2.0.6/services/stack_advisor.py
