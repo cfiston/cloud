@@ -1525,7 +1525,7 @@
             <properties>
                 <entry>
                     <key>Database Connection URL</key>
-                    <value>jdbc:mysql://MysqlUrl/MysqlSchema</value>
+                    <value>jdbc:mysql://mysqlUrl/mysqlSchema</value>
                 </entry>
                 <entry>
                     <key>Database Driver Class Name</key>
