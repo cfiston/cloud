@@ -279,7 +279,7 @@ sudo curl -X POST \
 }
 EOF
 curl -X POST   http://${nifi_ip}:9090/nifi-api/process-groups/${group_id}/template-instance   -H 'Content-Type: application/json' --data-binary "@/tmp/temp_data.json"
-
+cd /tmp
 wget https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.47.zip
 unzip mysql-connector-java-5.1.47.zip
 cp mysql-connector-java-5.1.47/mysql-connector-java-5.1.47.jar .
