@@ -159,16 +159,16 @@ nifi_config="\"nifi-flow-env\" : { \"properties_attributes\" : { }, \"properties
 echo ${nifi_config} > nifi-config.json
 sudo cd /tmp/
 echo "Downloading Keiba Cloud nifi template..."
-sudo curl -ssLO https://raw.githubusercontent.com/cfiston/cloud/master/KeibaDataPlatform.xml.xml
+sudo curl -ssLO https://raw.githubusercontent.com/cfiston/cloud/master/KeibaDataPlatform.xml
 
-sudo sed -i  "s|S3Bucket|${sthree_bucket}|g" KeibaDataPlatform.xml.xml
-sudo sed -i  "s|SftpHost|${sftp_host}|g" KeibaDataPlatform.xml.xml
-sudo sed -i  "s|SftpPem|${sftp_pem}|g" KeibaDataPlatform.xml.xml
-sudo sed -i  "s|SftpUser|${sftp_user}|g" KeibaDataPlatform.xml.xml
-sudo sed -i  "s|MysqlUrl|${mysql_url}|g" KeibaDataPlatform.xml.xml
-sudo sed -i  "s|MysqlSchema|${mysql_schema}|g" KeibaDataPlatform.xml.xml
+sudo sed -i  "s|S3Bucket|${sthree_bucket}|g" KeibaDataPlatform.xml
+sudo sed -i  "s|SftpHost|${sftp_host}|g" KeibaDataPlatform.xml
+sudo sed -i  "s|SftpPem|${sftp_pem}|g" KeibaDataPlatform.xml
+sudo sed -i  "s|SftpUser|${sftp_user}|g" KeibaDataPlatform.xml
+sudo sed -i  "s|MysqlUrl|${mysql_url}|g" KeibaDataPlatform.xml
+sudo sed -i  "s|MysqlSchema|${mysql_schema}|g" KeibaDataPlatform.xml
 sudo sed -i  "s|MysqlUser|${mysql_user}|g" KeibaDataPlatform.xml.xml
-sudo sed -i  "s|MysqlPassword|${mysql_password}|g" KeibaDataPlatform.xml.xml
+sudo sed -i  "s|MysqlPassword|${mysql_password}|g" KeibaDataPlatform.xml
 
 
 
