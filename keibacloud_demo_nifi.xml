@@ -1525,15 +1525,15 @@
             <properties>
                 <entry>
                     <key>Database Connection URL</key>
-                    <value>jdbc:Mysql://MysqlUrl/MysqlSchema</value>
+                    <value>jdbc:mysql://MysqlUrl/MysqlSchema</value>
                 </entry>
                 <entry>
                     <key>Database Driver Class Name</key>
-                    <value>com.Mysql.jdbc.Driver</value>
+                    <value>com.mysql.jdbc.Driver</value>
                 </entry>
                 <entry>
                     <key>database-driver-locations</key>
-                    <value>file:///Users/keitaf/code/cloud/Mysql-connector-java-5.1.47-bin.jar</value>
+                    <value>file:///Users/keitaf/code/cloud/mysql-connector-java-5.1.47-bin.jar</value>
                 </entry>
                 <entry>
                     <key>kerberos-credentials-service</key>
