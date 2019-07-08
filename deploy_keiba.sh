@@ -159,16 +159,16 @@ nifi_config="\"nifi-flow-env\" : { \"properties_attributes\" : { }, \"properties
 echo ${nifi_config} > nifi-config.json
 sudo cd /tmp/
 echo "Downloading Keiba Cloud nifi template..."
-sudo curl -ssLO https://raw.githubusercontent.com/cfiston/cloud/master/keibacloud_demo_nifi.xml
+sudo curl -ssLO https://raw.githubusercontent.com/cfiston/cloud/master/KeibaDataPlatform.xml.xml
 
-sudo sed -i  "s|S3Bucket|${sthree_bucket}|g" keibacloud_demo_nifi.xml
-sudo sed -i  "s|SftpHost|${sftp_host}|g" keibacloud_demo_nifi.xml
-sudo sed -i  "s|SftpPem|${sftp_pem}|g" keibacloud_demo_nifi.xml
-sudo sed -i  "s|SftpUser|${sftp_user}|g" keibacloud_demo_nifi.xml
-sudo sed -i  "s|MysqlUrl|${mysql_url}|g" keibacloud_demo_nifi.xml
-sudo sed -i  "s|MysqlSchema|${mysql_schema}|g" keibacloud_demo_nifi.xml
-sudo sed -i  "s|MysqlUser|${mysql_user}|g" keibacloud_demo_nifi.xml
-sudo sed -i  "s|MysqlPassword|${mysql_password}|g" keibacloud_demo_nifi.xml
+sudo sed -i  "s|S3Bucket|${sthree_bucket}|g" KeibaDataPlatform.xml.xml
+sudo sed -i  "s|SftpHost|${sftp_host}|g" KeibaDataPlatform.xml.xml
+sudo sed -i  "s|SftpPem|${sftp_pem}|g" KeibaDataPlatform.xml.xml
+sudo sed -i  "s|SftpUser|${sftp_user}|g" KeibaDataPlatform.xml.xml
+sudo sed -i  "s|MysqlUrl|${mysql_url}|g" KeibaDataPlatform.xml.xml
+sudo sed -i  "s|MysqlSchema|${mysql_schema}|g" KeibaDataPlatform.xml.xml
+sudo sed -i  "s|MysqlUser|${mysql_user}|g" KeibaDataPlatform.xml.xml
+sudo sed -i  "s|MysqlPassword|${mysql_password}|g" KeibaDataPlatform.xml.xml
 
 
 
@@ -264,7 +264,7 @@ group_id=$(curl -L http://${nifi_ip}:9090/nifi-api/process-groups/root | python 
 sudo curl -X POST \
   http://${nifi_ip}:9090/nifi-api/process-groups/${group_id}/templates/upload \
   -H 'content-type: multipart/form-data' \
-  -F template=@/tmp/keibacloud_demo_nifi.xml > /tmp/temp.xml
+  -F template=@/tmp/KeibaDataPlatform.xml> /tmp/temp.xml
 ###UPLOAD NIFI TEMPLATE AND GET THE TEMPLATE ID
   template_id=$( python -c "import sys, json,  xml.etree.ElementTree as ET; value = ET.parse('/tmp/temp.xml').find('template/id');  print(value.text)")
   ##INSTANTIATE template
