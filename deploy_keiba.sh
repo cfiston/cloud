@@ -282,7 +282,7 @@ curl -X POST   http://${nifi_ip}:9090/nifi-api/process-groups/${group_id}/templa
 cd /tmp
 wget https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.47.zip
 unzip mysql-connector-java-5.1.47.zip
-cp mysql-connector-java-5.1.47/mysql-connector-java-5.1.47.jar .
+cp mysql-connector-java-5.1.47/mysql-connector-java-5.1.47-bin.jar .
 
 echo "installing CEM..."
 sudo mkdir -p /usr/hdf/cem
