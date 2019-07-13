@@ -264,7 +264,7 @@ DIFF=$(( $END - $START ))
 
 
 
-slack_message="KeibaCloud Deployment Completed Successfully at ${ts_end}, it took ${DIFF} min, NIFI URL is ${public_ip}:9090"
+slack_message="KeibaCloud Deployment Completed Successfully at ${ts_end}, it took ${DIFF} sec, NIFI URL is http://${public_ip}:9090"
 sudo curl -X POST -H 'Content-type: application/json' --data '{"text":"'"$slack_message"'"}' https://hooks.slack.com/services/${slack_webhook}
 slack_message="Services Deployed are: ${ambari_services}"
 sudo curl -X POST -H 'Content-type: application/json' --data '{"text":"'"$slack_message"'"}' https://hooks.slack.com/services/${slack_webhook}
