@@ -899,6 +899,11 @@
                                     "Ref": "MysqlSchema"
                                 },
                                 "'\n",
+                                "export slack_webhook='",
+                                {
+                                    "Ref": "slackHook"
+                                },
+                                "'\n",
                                 "export post_command='",
                                 {
                                     "Ref": "PostCommand"
@@ -978,6 +983,8 @@
                                 "export mysql_schema=\"${mysql_schema}\"\n",
                                 "export mysql_user=\"${mysql_user}\"\n",
                                 "export mysql_password=\"${mysql_password}\"\n",
+
+                                "export slack_webhook=\"${slack_webhook}\"\n",
                                 "export post_command=\"${post_command}\"\n",
                                 "export ambari_pass=\"${ambari_pass}\"\n",
                                 "export deploy=\"${deploy}\"\n",
