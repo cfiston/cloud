@@ -4,7 +4,7 @@
 
 ts_start=$(date)
 
-start=`date +%m`
+START=$(date +%s)
 
 
 
@@ -259,15 +259,16 @@ ambari_wait_request_complete 1
 
 public_ip=$(curl http://169.254.169.254/2009-04-04/meta-data/public-ipv4)
 ts_end=$(date)
-end=`date +%m`
+END=$(date +%s)
+DIFF=$(( $END - $START ))
 
 
-runtime=$((end-start))
-slack_message="KeibaCloud Deployment Completed Successfully at ${ts_end}, it took ${runtime} min, EC2 IP is ${public_ip}"
+
+slack_message="KeibaCloud Deployment Completed Successfully at ${ts_end}, it took ${DIFF} min, NIFI URL is ${public_ip}:9090"
 sudo curl -X POST -H 'Content-type: application/json' --data '{"text":"'"$slack_message"'"}' https://hooks.slack.com/services/${slack_webhook}
-slack_message="Services Deployed are: $(ambari_services)"
+slack_message="Services Deployed are: ${ambari_services}"
 sudo curl -X POST -H 'Content-type: application/json' --data '{"text":"'"$slack_message"'"}' https://hooks.slack.com/services/${slack_webhook}
-sudo curl -X POST -H 'Content-type: application/json' --data '{"text":"'"$slack_message"'"}' https://hooks.slack.com/services/${slack_webhook}
+
 
 
 
