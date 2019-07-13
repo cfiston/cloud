@@ -2,7 +2,10 @@
 #!/usr/bin/env bash
 
 
-ts_start=`date +%m`
+ts_start=$(date)
+
+start=`date +%m`
+
 
 
 
@@ -255,10 +258,11 @@ ambari_configs
 ambari_wait_request_complete 1
 
 public_ip=$(curl http://169.254.169.254/2009-04-04/meta-data/public-ipv4)
-ts_end=`date +%m`
+ts_end=$(date)
+end=`date +%m`
 
 
-runtime=$((ts_end-ts_start))
+runtime=$((end-start))
 slack_message="KeibaCloud Deployment Completed Successfully at ${ts_end}, it took ${runtime} min, EC2 IP is ${public_ip}"
 sudo curl -X POST -H 'Content-type: application/json' --data '{"text":"'"$slack_message"'"}' https://hooks.slack.com/services/${slack_webhook}
 
