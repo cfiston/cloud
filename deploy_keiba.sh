@@ -245,6 +245,9 @@ ambari_pass="${ambari_password}" source /tmp/ambari-bootstrap-master/extras/amba
 ambari_configs
 ambari_wait_request_complete 1
 
+public_ip=$(curl http://169.254.169.254/2009-04-04/meta-data/public-ipv4)
+slack_message="DEPLOYMENT SUCCESSFUL, EC2 IP is $(public_ip)"
+sudo curl -X POST -H 'Content-type: application/json' --data '{"text":"$(slack_message)"}' https://hooks.slack.com/services/$(slack_hook)
 
 
 sleep 10
