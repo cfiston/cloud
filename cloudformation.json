@@ -899,11 +899,6 @@
                                     "Ref": "MysqlSchema"
                                 },
                                 "'\n",
-                                "export slack_webhook='",
-                                {
-                                    "Ref": "slackHook"
-                                },
-                                "'\n",
                                 "export post_command='",
                                 {
                                     "Ref": "PostCommand"
@@ -978,7 +973,7 @@
                                 "export sthree_bucket=\"${sthree_bucket}\"\n",
                                 "export sftp_pem=\"${sftp_pem}\"\n",
                                 "export sftp_user=\"${sftp_user}\"\n",
-                                "export sftp_host=\"${sftp_user}\"\n",
+                                "export sftp_host=\"${sftp_host}\"\n",
                                 "export mysql_url=\"${mysql_url}\"\n",
                                 "export mysql_schema=\"${mysql_schema}\"\n",
                                 "export mysql_user=\"${mysql_user}\"\n",
