@@ -246,8 +246,9 @@ ambari_configs
 ambari_wait_request_complete 1
 
 public_ip=$(curl http://169.254.169.254/2009-04-04/meta-data/public-ipv4)
-slack_message="DEPLOYMENT SUCCESSFUL, EC2 IP is $(public_ip)"
-sudo curl -X POST -H 'Content-type: application/json' --data '{"text":"$(slack_message)"}' https://hooks.slack.com/services/$(slack_hook)
+d=$(date)
+slack_message="DEPLOYMENT SUCCESSFUL at ${d}, EC2 IP is ${public_ip}"
+sudo curl -X POST -H 'Content-type: application/json' --data '{"text":"'"$slack_message"'"}' https://hooks.slack.com/services/${slack_webhook}
 
 
 sleep 10
