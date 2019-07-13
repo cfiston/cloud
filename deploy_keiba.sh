@@ -2,6 +2,15 @@
 #!/usr/bin/env bash
 
 
+ts_start=`date +%m`
+
+
+
+
+
+slack_message="KeibaCloud Deployment Started at ${ts_start}, EC2 IP is ${public_ip}"
+sudo curl -X POST -H 'Content-type: application/json' --data '{"text":"'"$slack_message"'"}' https://hooks.slack.com/services/${slack_webhook}
+
 export create_image=${create_image:-true}
 export ambari_version=2.7.3.0
 export mpack_url="http://public-repo-1.hortonworks.com/HDF/centos7/3.x/updates/3.4.1.1/tars/hdf_ambari_mp/hdf-ambari-mpack-3.4.1.1-4.tar.gz"
@@ -246,8 +255,11 @@ ambari_configs
 ambari_wait_request_complete 1
 
 public_ip=$(curl http://169.254.169.254/2009-04-04/meta-data/public-ipv4)
-d=$(date)
-slack_message="DEPLOYMENT SUCCESSFUL at ${d}, EC2 IP is ${public_ip}"
+ts_end=`date +%m`
+
+
+runtime=$((ts_end-ts_start))
+slack_message="KeibaCloud Deployment Completed Successfully at ${ts_end}, it took ${runtime} min, EC2 IP is ${public_ip}"
 sudo curl -X POST -H 'Content-type: application/json' --data '{"text":"'"$slack_message"'"}' https://hooks.slack.com/services/${slack_webhook}
 
 
