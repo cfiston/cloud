@@ -11,7 +11,7 @@ start=`date +%m`
 
 
 
-slack_message="KeibaCloud Deployment Started at ${ts_start}, EC2 IP is ${public_ip}"
+slack_message="KeibaCloud Deployment Started : ${ts_start}"
 sudo curl -X POST -H 'Content-type: application/json' --data '{"text":"'"$slack_message"'"}' https://hooks.slack.com/services/${slack_webhook}
 
 export create_image=${create_image:-true}
@@ -33,8 +33,8 @@ export install_solr=${install_solr:-false}    ## for Twitter demo
 export host=$(hostname -f)
 
 
-export ambari_services="HDFS MAPREDUCE2 YARN ZOOKEEPER DRUID SUPERSET STREAMLINE NIFI NIFI_REGISTRY KAFKA STORM REGISTRY HBASE PHOENIX" ## HIVE SPARK2
-export ambari_services="ZOOKEEPER NIFI NIFI_REGISTRY KAFKA"
+#export ambari_services="HDFS MAPREDUCE2 YARN ZOOKEEPER DRUID SUPERSET STREAMLINE NIFI NIFI_REGISTRY KAFKA STORM REGISTRY HBASE PHOENIX" ## HIVE SPARK2
+#export ambari_services="ZOOKEEPER NIFI NIFI_REGISTRY KAFKA"
 export cluster_name=Keiba
 export ambari_stack_version=3.1
 export host_count=1
