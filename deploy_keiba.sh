@@ -265,6 +265,10 @@ end=`date +%m`
 runtime=$((end-start))
 slack_message="KeibaCloud Deployment Completed Successfully at ${ts_end}, it took ${runtime} min, EC2 IP is ${public_ip}"
 sudo curl -X POST -H 'Content-type: application/json' --data '{"text":"'"$slack_message"'"}' https://hooks.slack.com/services/${slack_webhook}
+slack_message="Services Deployed are: $(ambari_services)"
+sudo curl -X POST -H 'Content-type: application/json' --data '{"text":"'"$slack_message"'"}' https://hooks.slack.com/services/${slack_webhook}
+sudo curl -X POST -H 'Content-type: application/json' --data '{"text":"'"$slack_message"'"}' https://hooks.slack.com/services/${slack_webhook}
+
 
 
 sleep 10
