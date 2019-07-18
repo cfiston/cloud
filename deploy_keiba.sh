@@ -173,6 +173,8 @@ sudo cd /tmp/
 echo "Downloading Keiba Cloud nifi template..."
 sudo curl -ssLO https://raw.githubusercontent.com/cfiston/cloud/master/KeibaDataPlatform.xml
 
+sudo curl -ssLO https://raw.githubusercontent.com/cfiston/cloud/Trucking_Nifi_Flow_Management_Template.xml
+
 sudo sed -i  "s|S3Bucket|${sthree_bucket}|g" KeibaDataPlatform.xml
 sudo sed -i  "s|SftpHost|${sftp_host}|g" KeibaDataPlatform.xml
 sudo sed -i  "s|SftpPem|${sftp_pem}|g" KeibaDataPlatform.xml
@@ -264,7 +266,7 @@ DIFF=$(( $END - $START ))
 
 
 
-slack_message="KeibaCloud Deployment Completed Successfully at ${ts_end}, it took ${DIFF} sec, NIFI URL is http://${public_ip}:9090"
+slack_message="KeibaCloud Deployment Completed Successfully at ${ts_end}, it took ${DIFF} sec, NIFI URL is http://${public_ip}:9090/nifi"
 sudo curl -X POST -H 'Content-type: application/json' --data '{"text":"'"$slack_message"'"}' https://hooks.slack.com/services/${slack_webhook}
 slack_message="Services Deployed are: ${ambari_services}"
 sudo curl -X POST -H 'Content-type: application/json' --data '{"text":"'"$slack_message"'"}' https://hooks.slack.com/services/${slack_webhook}
@@ -304,6 +306,31 @@ sudo curl -X POST \
 }
 EOF
 curl -X POST   http://${nifi_ip}:9090/nifi-api/process-groups/${group_id}/template-instance   -H 'Content-Type: application/json' --data-binary "@/tmp/temp_data.json"
+sudo rm -f /tmp/temp_data.json
+
+#UPLOAD TRUCKING FLOW
+sudo curl -X POST \
+  http://${nifi_ip}:9090/nifi-api/process-groups/${group_id}/templates/upload \
+  -H 'content-type: multipart/form-data' \
+  -F template=@/tmp/Trucking_Nifi_Flow_Management_Template.xml> /tmp/temp.xml
+
+ template_id=$( python -c "import sys, json,  xml.etree.ElementTree as ET; value = ET.parse('/tmp/temp.xml').find('template/id');  print(value.text)")
+  ##INSTANTIATE template
+
+
+
+  sudo cat << EOF > /tmp/temp_data.json
+  {
+"originX": 0.0,
+"originY": 0.0,
+"templateId": "${template_id}"
+}
+EOF
+curl -X POST   http://${nifi_ip}:9090/nifi-api/process-groups/${group_id}/template-instance   -H 'Content-Type: application/json' --data-binary "@/tmp/temp_data.json"
+
+#Trucking_Nifi_Flow_Management_Template.xml
+
+
 cd /tmp
 wget https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.47.zip
 unzip mysql-connector-java-5.1.47.zip
